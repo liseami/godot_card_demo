@@ -1,0 +1,121 @@
+[gd_scene load_steps=7 format=3 uid="uid://bsf0c0rqckwhp"]
+
+[ext_resource type="Texture2D" uid="uid://cjf8vp787gabo" path="res://Art/MainBattleBackground.png" id="1_i23yy"]
+[ext_resource type="Script" path="res://script/main_battle_scene.gd" id="1_k03ec"]
+[ext_resource type="PackedScene" uid="uid://ds3ej312i07b4" path="res://scenes/player.tscn" id="3_a88p8"]
+
+[sub_resource type="Curve" id="Curve_xyfu7"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gt72y"]
+min_value = -1.0
+max_value = 2.13163e-14
+_data = [Vector2(0, -1), 0.0, 1.98916, 0, 1, Vector2(0.502724, 2.13163e-14), 0.0, 0.0, 0, 0, Vector2(1, -1), -2.01095, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_rrf5v"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
+point_count = 2
+
+[node name="MainBattleScene" type="Node2D"]
+script = ExtResource("1_k03ec")
+spread_curve = SubResource("Curve_xyfu7")
+y_curve = SubResource("Curve_gt72y")
+rotation_curve = SubResource("Curve_rrf5v")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BackGround" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_i23yy")
+metadata/_edit_use_anchors_ = true
+
+[node name="TopBar" type="BoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -955.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 2
+
+[node name="UserName" type="Label" parent="Control/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 46
+text = "UserName"
+
+[node name="PosName" type="Label" parent="Control/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 46
+
+[node name="Spacer" type="Label" parent="Control/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 46
+
+[node name="MapButton" type="Button" parent="Control/TopBar"]
+custom_minimum_size = Vector2(140, 2.08165e-12)
+layout_mode = 2
+text = "地图"
+
+[node name="CardViewButton" type="Button" parent="Control/TopBar"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "卡组"
+
+[node name="SettingButton" type="Button" parent="Control/TopBar"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "设置"
+
+[node name="AddCardButton" type="Button" parent="Control"]
+custom_minimum_size = Vector2(140, 2.08165e-12)
+layout_mode = 0
+offset_left = 354.0
+offset_top = 190.0
+offset_right = 494.0
+offset_bottom = 221.0
+text = "添加卡牌"
+
+[node name="DeleteCardButton" type="Button" parent="Control"]
+custom_minimum_size = Vector2(140, 2.08165e-12)
+layout_mode = 0
+offset_left = 354.0
+offset_top = 240.0
+offset_right = 494.0
+offset_bottom = 271.0
+text = "删除卡牌"
+
+[node name="Hand" type="Node2D" parent="."]
+position = Vector2(996, 1010)
+
+[node name="player" parent="." instance=ExtResource("3_a88p8")]
+visible = false
+position = Vector2(471, 710)
+scale = Vector2(3, 3)
+
+[connection signal="pressed" from="Control/TopBar/SettingButton" to="." method="_on_setting_button_pressed"]
+[connection signal="pressed" from="Control/AddCardButton" to="." method="_on_add_card_button_pressed"]
+[connection signal="pressed" from="Control/DeleteCardButton" to="." method="_on_delete_card_button_pressed"]
